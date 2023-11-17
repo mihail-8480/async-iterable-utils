@@ -43,3 +43,12 @@ export function skip<T>(
     }
   };
 }
+
+export function join<T, TMiddle, TResult>(
+  a: (source: AsyncIterable<T>) => AsyncIterable<TMiddle>,
+  b: (source: AsyncIterable<TMiddle>) => AsyncIterable<TResult>
+): (source: AsyncIterable<T>) => AsyncIterable<TResult> {
+  return function (source: AsyncIterable<T>) {
+    return b(a(source));
+  };
+}
